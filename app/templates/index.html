@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block content %}     
+
+
+
+<!-- <div style="width:100%;">
+Header
+<div style="float:left; width:20%;">
+Left 
+</div>
+<div style="float:left; width:80%; margin-left:10px;">
+Right 
+<div>
+Footer
+</div>
+</div> -->
+<div style="float:left; width:45%;">
+  MOVIE LIST
+  <div class="row">
+    <div class="column">
+      <div class="cell-r">Rank</div>
+      <div class="cell-t">Title</div>
+      <div class="cell-g">Rating</div>
+    </div>
+  </div>
+
+  {% for movie in movies -%} 
+  <a href="{{ url_for('watched', movie_id=movie.movie_id) }}">
+  <div class="row">
+    <div class="column">
+      <div class="cell-r">{{movie.movie_id}}</div>
+      <div class="cell-t">{{movie.title}}</div>
+      <div class="cell-g">{{movie.imdb_rating}}</div>
+    </div>
+  </div></a>
+{%- endfor %}
+</div>
+<div style="float:left; width:45%; margin-left:5%">
+MOVIES WATCHED
+  <div class="row">
+    <div class="column">
+      <div class="cell-r">Rank</div>
+      <div class="cell-t">Title</div>
+      <div class="cell-g">Rating</div>
+    </div>
+  </div>
+  {%for movie in movies_watched %}
+    <a href="{{url_for('unwatched',movie_id=movie.movie_id)}}">
+    <div class="row">
+     <div class="column">
+      <div class="cell-r">{{movie.movie_id}}</div>
+      <div class="cell-t">{{movie.title}}</div>
+      <div class="cell-g">{{movie.imdb_rating}}</div>
+    </div>
+  </div></a>
+    {% endfor %} 
+
+</div>
+{% endblock %}
+
+     
