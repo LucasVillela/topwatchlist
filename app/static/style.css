@@ -51,28 +51,16 @@ padding-right: 7px;
   width: 3em;
 }
 
-.movieinfo-img-left {
-  float: left;
+.movie-poster img{
   width: 200px;
-  margin-right: 10px;
+  height: 300px;
   
 }
+
 .movieinfo-content {
   float: left;
   width: 300px;
   margin-top: 11em;
-}
-.movieinfo {
-  display: none; 
-  width: 530px;
-  padding: 20px;
-  border: 3px solid #525A66;
-  margin-top: 0px;
-  margin-left: 10px;
-  margin-bottom: 10px;
-  background: #BEB9B9;
-  overflow: auto;
-  box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
 }
 
 p
@@ -82,13 +70,11 @@ p
 img
 { border: 0;}
 
-a, a:hover
-{ outline: none;
-  color: #111;
-  text-decoration: underline;}
+a
+{
+  color: #000;
+  text-decoration: none;}
 
-a:hover
-{ text-decoration: none;}
 
 blockquote
 { margin: 20px 0 20px 0; 

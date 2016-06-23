@@ -10,13 +10,15 @@ from .forms import LoginForm
 def index():
 	user = g.user
 	movies_watched = Movie.query.filter(Watchlist.movie_id == Movie.movie_id).filter(Watchlist.user_id == current_user.user_id).order_by(Movie.movie_id).all()
-	#movies_watched_id = Watchlist.query(Watchlist.movie_id).filter(Watchlist.user_id == current_user.user_id).all()
-	#movies_watched_id = db.engine.execute("SELECT movie_id from watchlist where user_id = 2")
 	movies_watched_id = Movie.query.with_entities(Movie.movie_id).filter(Watchlist.movie_id == Movie.movie_id).filter(Watchlist.user_id == current_user.user_id).all()
 	movies = Movie.query.filter(~Movie.movie_id.in_(movies_watched_id)).order_by(Movie.movie_id).all()
-	#movies = Movie.query.order_by(Movie.movie_id).all()
-	#watchlist = Watchlist.query.filter_by(user_id = user.user_id).all()
 	return render_template("index.html",movies=movies,movies_watched=movies_watched)
+
+@app.route('/movie/<int:id>' , methods=['GET'])
+@login_required
+def movie(id):
+	movie = Movie.query.filter_by(movie_id = id).first()
+	return render_template("movie.html",movie=movie)
 
 
 @app.route('/login', methods=['GET', 'POST'])
