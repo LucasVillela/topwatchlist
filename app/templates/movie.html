@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}  
+
+<div class="movie-pad">
+
+	<div class="movie-poster" style="float:left; width=40%;">
+		<img src="{{ url_for('static', filename='posters/') }}{{movie.poster}}" >
+	</div>
+
+	<div class="movieinfo-content" style="float:left; width=60%;">
+		{{movie.title}}<br>
+		{{movie.imdb_rating}}<br>
+		{{movie.overview}}<br>
+		{{movie.release_date}}<br>
+		{{movie.actors}}<br>
+		{{movie.awards}}<br>
+	</div>
+
+</div>
+
+{% endblock %}
