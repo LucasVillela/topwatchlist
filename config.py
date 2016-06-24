@@ -2,6 +2,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 SQLALCHEMY_DATABASE_URI = 'postgresql://movieapp:movieapp@localhost/topwatchlist'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 OPENID_PROVIDERS = [
     {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},

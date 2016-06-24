@@ -1,191 +1,64 @@
 {% extends "layout.html" %}
-{% block content %}     
-
+{% block content %}              
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  font-family: Lato;
-}
-body {
-  padding: 0px;
-  background: #e5e2e6;
-}
-.flatTable {
-  width: 100%;
-  min-width: 500px;
-  border-collapse: collapse;
-  font-weight: bold;
-  color: #6b6b6b;
-}
-.flatTable tr {
-  height: 50px;
-  background: #d4d1d5;
-  border-bottom: rgba(0, 0, 0, 0.05) 1px solid;
-}
-.flatTable td {
-  box-sizing: border-box;
-  padding-left: 30px;
-}
-.flatTable .titleTr {
-  height: 70px;
-  color: #f6f3f7;
-  background: #418a95;
-  border: 0px solid;
-}
-.flatTable .plusTd {
-  background: url(http://i.imgur.com/3hSkhay.png) center center no-repeat, rgba(0, 0, 0, 0.1);
-}
-.flatTable .controlTd {
-  position: relative;
-  width: 80px;
-  background: url(http://i.imgur.com/9Q5f6cv.png) center center no-repeat;
-  cursor: pointer;
-}
-.flatTable .headingTr {
-  height: 30px;
-  background: #63acb7;
-  color: #f6f3f7;
-  font-size: 8pt;
-  border: 0px solid;
-}
-.button {
-  text-align: center;
-  cursor: pointer;
-}
-.sForm {
-  position: absolute;
-  top: 0;
-  right: -400px;
-  width: 400px;
-  height: 100%;
-  background: #d4d1d5;
-  overflow: hidden;
-  transition: width 1s, right .3s;
-  padding: 0px;
-  box-sizing: border-box;
-}
-.sForm .close {
-  float: right;
-  height: 70px;
-  width: 80px;
-  padding-top: 25px;
-  box-sizing: border-box;
-  background: rgba(255, 0, 0, 0.4);
-}
-.sForm .title {
-  width: 100%;
-  height: 70px;
-  padding-top: 20px;
-  padding-left: 20px;
-  box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.1);
-}
-.open {
-  right: 0;
-  width: 400px !important;
-}
-.settingsIcons {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  overflow: hidden;
-}
-.display {
-  width: 300px;
-}
-.settingsIcon {
-  float: right;
-  background: #418a95;
-  color: #f6f3f7;
-  height: 50px;
-  width: 80px;
-  padding-top: 15px;
-  box-sizing: border-box;
-  text-align: center;
-  overflow: hidden;
-  transition: width 1s;
-}
-.settingsIcon:hover {
-  background: #1f6873;
-}
-tr:nth-child(3) .settingsIcon {
-  height: 51px;
-}
-.openIcon {
-  width: 80px;
-}
-
+  .movielink{
+    color: #333;
+  }
+  .movielink:hover{
+    color: #999;
+    text-decoration: none;
+  }
 </style>
+<div class="container-fluid">
+  <div class="row">
+          <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> 
 
-<div style="float:left; width:45%;">
-<table class="flatTable">
-  <tr class="titleTr">
-    <td class="titleTd">toWatch</td>
-    <td colspan="4"></td>
-    <td class="plusTd button"></td>
-  </tr>
-  <tr class="headingTr">
-    <td>RANK</td>
-    <td>MOVIE</td>
-    <td>Insert</td>
-    <td></td>
-  </tr>
-  {% for movie in movies -%} 
-  <tr>
-    <td>{{movie.movie_id}}</td></a>
-    <td><a href="{{ url_for('movie', id=movie.movie_id) }}">
-    <div style="height:100%;width:100%">{{movie.title}}</div></a></td>
+    <div class="col-lg-12">
+      <div class="col-md-6">                      
 
-    <td><a href="{{ url_for('watched', movie_id=movie.movie_id) }}"><div style="height:100%;width:100%">+</div>
-    </td></a>
-  </tr>
-  {%- endfor %}
+
+      <table class="table table-hover">
+       <thead class="thead-inverse">
+         <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Add</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for movie in movies -%} 
+       <tr>
+        <td scope="row">{{movie.movie_id}}</td>
+        <td><a href="{{ url_for('movie', id=movie.movie_id) }}" class="movielink" >{{movie.title}}</a></td>
+        <td><a href="{{ url_for('watched', movie_id=movie.movie_id) }}">Add</a></td>
+      </tr> 
+      {%- endfor %}
+    </tbody>
   </table>
-  </div>
-
-
-<div style="float:left; width:45%; margin-left:5%">
-<table class="flatTable">
-  <tr class="titleTr">
-    <td class="titleTd">Watched</td>
-    <td colspan="4"></td>
-    <td class="plusTd button"></td>
-  </tr>
-  <tr class="headingTr">
-    <td>RANK</td>
-    <td>MOVIE</td>
-    <td>Insert</td>
-    <td></td>
-  </tr>
-  {% for movie in movies_watched -%} 
-  <tr>
-    
-    <td>{{movie.movie_id}}</td>
-    <td><a href="{{ url_for('movie', id=movie.movie_id) }}"><div style="height:100%;width:100%">{{movie.title}}</div></a></td>
-    <td><a href="{{ url_for('unwatched', movie_id=movie.movie_id) }}"><div style="height:100%;width:100%">+</div>
-    <td>
-    </td></a>
-  </tr>
-  {%- endfor %}
+    </div>
+    <div class="col-md-6"> 
+       <table class="table table-hover">
+       <thead class="thead-inverse">
+         <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Add</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for movie in movies_watched -%} 
+       <tr>
+        <td scope="row">{{movie.movie_id}}</td>
+        <td><a href="{{ url_for('movie', id=movie.movie_id) }}" class="movielink" >{{movie.title}}</a></td>
+        <td><a href="{{ url_for('unwatched', movie_id=movie.movie_id) }}">Remove</a></td>
+      </tr> 
+      {%- endfor %}
+    </tbody>
   </table>
+    </div>
+    </div>
+
+</div>
 </div>
 
-<script>
-
-$(".button").click(function () {
-  $("#sForm").toggleClass("open");   
-});
-
-$(".controlTd").click(function () {
-  $(this).children(".settingsIcons").toggleClass("display"); 
-  $(this).children(".settingsIcon").toggleClass("openIcon"); 
-});
-
-
-</script>
- 
 {% endblock %}
-
-     

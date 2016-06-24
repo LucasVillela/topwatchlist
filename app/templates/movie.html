@@ -1,21 +1,58 @@
 {% extends "layout.html" %}
 {% block content %}  
 
-<div class="movie-pad">
-
-	<div class="movie-poster" style="float:left; width=40%;">
-		<img src="{{ url_for('static', filename='posters/') }}{{movie.poster}}" >
+<div class="container-fluid">
+  <div class="row row-eq-height">
+  	<div class="col-lg-12">
+    	<div class="col-md-3">
+     		<img src="{{ url_for('static', filename='posters/') }}{{movie.poster}}" class="img-rounded pull-xs-left" width="200px" height="300px">
+     	</div> 
+     	<div class="col-md-9">
+     		<h3><b>{{movie.title}}</b></h3>
+     		<div class="row">
+     			<div class="col-md-2">
+     				<b>IMDB Rating</b>
+     			</div>
+     			<div class="col-md-6">
+     				{{movie.imdb_rating}}
+     			</div>
+     		</div>
+     		<div class="row">
+     			<div class="col-md-2">
+     				<b>Plot</b>
+     			</div>
+     			<div class="col-md-6">
+     				{{movie.overview}}
+     			</div>
+     		</div>
+     		<div class="row">
+     			<div class="col-md-2">
+     				<b>Release Date</b>
+     			</div>
+     			<div class="col-md-6">
+     				{{movie.release_date}}
+     			</div>
+     		</div>
+     		<div class="row">
+     			<div class="col-md-2">
+     				<b>Actors</b>
+     			</div>
+     			<div class="col-md-6">
+     				{{movie.actors}}
+     			</div>
+     		</div>
+     		<div class="row">
+     			<div class="col-md-2">
+     				<b>Awards</b>
+     			</div>
+     			<div class="col-md-6">
+     				{{movie.awards}}
+     			</div>
+     		</div>
+     			
+		</div>
 	</div>
-
-	<div class="movieinfo-content" style="float:left; width=60%;">
-		{{movie.title}}<br>
-		{{movie.imdb_rating}}<br>
-		{{movie.overview}}<br>
-		{{movie.release_date}}<br>
-		{{movie.actors}}<br>
-		{{movie.awards}}<br>
-	</div>
-
+</div>
 </div>
 
 {% endblock %}
