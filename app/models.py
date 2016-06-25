@@ -5,12 +5,18 @@ from app import db
 class Client(db.Model):
 	user_id = db.Column(db.Integer, primary_key=True)
 	nickname = db.Column(db.String(120))
-	dt_nasc = db.Column(db.DateTime)
+	dt_nasc = db.Column(db.Date)
 	email = db.Column(db.String(55))
 	passwd = db.Column(db.String(30))
 
 	def __repr__(self):
 		return '<Client %r>' % (self.nickname)
+
+	def __init__(self, nickname, dt_nasc,email,passwd):
+		self.nickname = nickname
+		self.dt_nasc = dt_nasc
+		self.email = email
+		self.passwd = passwd
 
 	@property
 	def is_authenticated(self):

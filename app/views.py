@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from app import app,db,lm,oid
+from app import app,db,lm,bcrypt
 from .models import Movie,Client,Watchlist
-from .forms import LoginForm
+from .forms import LoginForm,RegisterForm
 
 @app.route('/')
 @app.route('/index')
@@ -27,14 +27,32 @@ def login():
 		return redirect(url_for('index'))
 	form = LoginForm()
 	if form.validate_on_submit():
-		flash(form.email.data)
 		user = Client.query.filter_by(email = form.email.data).first()
-		if user:
+		if user and bcrypt.check_password_hash(user.passwd, form.password.data):
 			login_user(user)
 			return redirect(url_for('index'))
+		flash('Wrong email or password')
 
 	return render_template('login.html', form=form)
 
+@app.route('/register',methods=['GET','POST'])
+def register():
+	form = RegisterForm()
+	if form.validate_on_submit():
+		checkuser = Client.query.filter_by(email = form.email.data).first()
+		if checkuser:
+			flash('User already exists')
+			return redirect(url_for('register'))
+		user = Client(form.nickname.data,form.dt_nasc.data,form.email.data,bcrypt.generate_password_hash(form.password.data))
+		# user.nickname = form.nickname.data
+		# user.dt_nasc = form.dt_nasc.data
+		# user.email = form.email.data
+		# user.passwd = bcrypt.generate_password_hash(form.password.data,getSalt())
+		db.session.add(user)
+		db.session.flush()
+		db.session.commit()
+		return redirect(url_for('login'))
+	return render_template('register.html',form=form)
 
 @app.route('/watched/<int:movie_id>', methods=['GET'])
 def watched(movie_id):
